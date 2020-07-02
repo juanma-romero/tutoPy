@@ -1,7 +1,7 @@
 import random
 
 
-# Crea una carta, cuando le pasamos un valor y un palo
+# se utiliza en clase Deck para crear las cartas del mazo
 class Card:
     def __init__(self, suit, value):
         self.suit = suit
@@ -22,6 +22,7 @@ class Deck:
         if len(self.cards) > 1:
             random.shuffle(self.cards)
 
+    # Se saca la primer carta de la lista y la funcion RETORNA esa carta!!
     def deal(self):
         if len(self.cards) > 1:
             return self.cards.pop(0)
@@ -74,9 +75,11 @@ class Game:
         playing = True
 
         while playing:
+            # Crea un mazo y lo mezcla
             self.deck = Deck()
             self.deck.shuffle()
 
+            # Crea la mano del jugador y del dealer
             self.player_hand = Hand()
             self.dealer_hand = Hand(dealer=True)
 
@@ -92,6 +95,7 @@ class Game:
 
             game_over = False
 
+            # ya terminado el setup, empieza la dinamica del juego
             while not game_over:
                 player_has_blackjack, dealer_has_blackjack = self.check_for_blackjack()
                 if player_has_blackjack or dealer_has_blackjack:
@@ -100,12 +104,15 @@ class Game:
                                                dealer_has_blackjack)
                     continue
 
+                # loop si no ingresa lo esperado (h o s)
                 choise = input("Please choose [Hit / Stick] ").lower()
                 while choise not in ["h", "s", "hit", "stick"]:
                     choise = input("Please enter 'hit' or 'stick' (or H/S) ").lower()
+                # pide otra carta
                 if choise in ["hit", "h"]:
                     self.player_hand.add_card(self.deck.deal())
                     self.player_hand.display()
+                    # Pierde si pasa los 21, linea 141
                     if self.player_is_over():
                         print("you have lost")
                         game_over = True
@@ -114,8 +121,8 @@ class Game:
                     dealer_hand_value = self.dealer_hand.get_value()
 
                     print("Final Result")
-                    print("Your hand: ", player_hand)
-                    print("Dealer's hand: ", dealer_hand)
+                    print("Your hand: ", player_hand_value)
+                    print("Dealer's hand: ", dealer_hand_value)
 
                     if player_hand_value > dealer_hand_value:
                         print("You Win!")
