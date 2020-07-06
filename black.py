@@ -11,7 +11,7 @@ class Card:
         return " of ".join((self.value, self.suit))
 
 
-# Crea un maso con sus convinaciones, tiene funcion mesclar y repartir
+# Crea un maso con sus combinaciones, tiene funcion mezclar y repartir
 class Deck:
     def __init__(self):
         self.cards = [Card(s, v) for s in ["Spades", "Clubs", "Hearts",
@@ -28,7 +28,7 @@ class Deck:
             return self.cards.pop(0)
 
 
-# crea una mano (para jugador o dealer), calcula el valor de la mano y mustra
+# crea una mano (para jugador o dealer), calcula el valor de la mano y muestra
 # la mano con su valor
 class Hand:
     def __init__(self, dealer=False):
@@ -79,15 +79,16 @@ class Game:
             self.deck = Deck()
             self.deck.shuffle()
 
-            # Crea la mano del jugador y del dealer
+            # Crea la clase Hand
             self.player_hand = Hand()
             self.dealer_hand = Hand(dealer=True)
 
+            # crea una lista de 2 posiciones, se le agrega una carta a cada posicion y a cada jugador
             for i in range(2):
                 self.player_hand.add_card(self.deck.deal())
                 self.dealer_hand.add_card(self.deck.deal())
 
-            print("Your hand is: ")
+            print("Tu mano es: ")
             self.player_hand.display()
             print()
             print("Dealer's hand is: ")
@@ -160,7 +161,7 @@ class Game:
             print("Both player has Blackjack! draw!")
 
         elif player_has_blackjack:
-            print("you have blackjack, you win!")
+            print("tenes blackjavk, salarza atomica!")
 
         elif dealer_has_blackjack:
             print("Dealer has blackjack1 Dealers wins!")
